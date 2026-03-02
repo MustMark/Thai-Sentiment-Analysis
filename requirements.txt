@@ -1,0 +1,5 @@
+scikit-learn
+streamlit
+
+
+# pip install -r requiremnets.txt
