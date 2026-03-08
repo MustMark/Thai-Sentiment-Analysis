@@ -1,3 +1,4 @@
 sentiment_clstm_anti_overfit.keras
 tokenizer.pkl
 traincomment.py
+.gitignore
