@@ -27,7 +27,7 @@ def clean_text(text):
     text = re.sub(r'\{.*?\}', '', text)
     text = re.sub(r'\d+', '', text)
     text = re.sub(r'(.)\1{2,}', r'\1', text)
-    text = re.sub(r'[^a-zA-Zก-๙\s]', '', text)
+    # text = re.sub(r'[^a-zA-Zก-๙\s]', '', text)
     text = text.replace('\n', ' ')
     text = re.sub(r'\s+', ' ', text).strip()
 
