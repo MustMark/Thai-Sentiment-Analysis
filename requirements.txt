@@ -1,0 +1,7 @@
+streamlit
+scikit-learn
+pandas
+matplotlib
+pythainlp
+
+# pip install -r requiremnets.txt
