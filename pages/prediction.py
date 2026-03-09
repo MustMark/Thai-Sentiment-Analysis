@@ -5,7 +5,7 @@ import json
 import pandas as pd
 
 # intro
-st.title("Text Sentiment Prediction")
+st.title("Thai Sentiment Prediction")
 "This project is a part of the :rainbow-background[:rainbow[Artificial Intelligence Course]] in Computer Engineering at King Mongkut's Institute of Technology Ladkrabang."
 st.link_button("Source Code (Github)", "https://github.com/MustMark/Thai-Sentiment-Analysis", icon=":material/open_in_new:")
 ""
