@@ -16,7 +16,7 @@ def thai_text_processor(text):
 @st.cache_resource
 def load_resources():
     try:
-        model = joblib.load("../ml/weight.pkl")
+        model = joblib.load("weight.pkl")
         return model
     except Exception as e:
         st.error(f"Model file not found: {e}")

@@ -22,7 +22,7 @@ def thai_text_processor(text):
     return " ".join(words)
 
 print("Loading and Preprocessing data...")
-df = pd.read_json("../dataset/train_sentiment_cleaned.json")
+df = pd.read_json("dataset/train_sentiment_cleaned.json")
 df['clean_text'] = df['text'].apply(thai_text_processor)
 
 X_train, X_val, y_train, y_val = train_test_split(
@@ -50,9 +50,9 @@ combined_features = FeatureUnion([
     ('char_tfidf', char_vectorizer)
 ])
 
-clf1 = LogisticRegression(C=0.5, class_weight='balanced', max_iter=1000, random_state=42)
+clf1 = LogisticRegression(C=0.3, class_weight='balanced', max_iter=1000, random_state=42)
 
-svc = LinearSVC(C=0.4, class_weight='balanced', random_state=42)
+svc = LinearSVC(C=0.2, class_weight='balanced', random_state=42)
 clf2 = CalibratedClassifierCV(svc)
 
 clf3 = LGBMClassifier(
