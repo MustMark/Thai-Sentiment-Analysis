@@ -29,10 +29,14 @@ def clean_text(text):
     text = re.sub(r'\{.*?\}', '', text)
     text = re.sub(r'\d+', '', text)
     text = re.sub(r'(.)\1{2,}', r'\1\1', text)
-    # text = re.sub(r'[^a-zA-Zก-๙\s]', '', text)
+    # text = re.sub(r'[^ก-๙\s]', '', text)
     text = text.replace('\n', ' ')
     text = re.sub(r'\s+', ' ', text).strip()
 
+    return text
+
+def clean_eng(text):
+    text = re.sub(r'[A-Za-z]', '', text)
     return text
 
 def handle_negation(tokens):
@@ -51,10 +55,10 @@ def handle_negation(tokens):
             new_tokens.append(tokens[i])
     return new_tokens
 
-positive_words = ["ดี", "เยี่ยม", "สุดยอด", "คุ้ม", "อร่อย", "ชอบ", "ส่งเสริม", "สุข"]
-negative_words = ["แย่", "ห่วย", "พัง", "แพง", "ช้า", "ไม่ดี"]
+# positive_words = ["ดี", "เยี่ยม", "สุดยอด", "คุ้ม", "อร่อย", "ชอบ", "ส่งเสริม", "สุข"]
+# negative_words = ["แย่", "ห่วย", "พัง", "แพง", "ช้า", "ไม่ดี"]
 
-def lexicon_features(text):
-    pos = sum(word in text for word in positive_words)
-    neg = sum(word in text for word in negative_words)
-    return [pos, neg]
+# def lexicon_features(text):
+#     pos = sum(word in text for word in positive_words)
+#     neg = sum(word in text for word in negative_words)
+#     return [pos, neg]

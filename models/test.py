@@ -1,6 +1,3 @@
-from sklearn.metrics import accuracy_score, classification_report # type: ignore
-import joblib # type: ignore
-from utility.preprocess import preprocess1, preprocess2, tokenizer
 import pickle
 
 def test_model(text_list: list):

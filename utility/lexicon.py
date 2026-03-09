@@ -1,7 +1,6 @@
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from scipy.sparse import csr_matrix
-# from utility.preprocess import lexicon_features
 
 class LexiconTransformer(BaseEstimator, TransformerMixin):
 
