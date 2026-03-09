@@ -27,10 +27,10 @@ members = {
         "อิงคสันตติกุล",
     ],
     "Responsibility": [
-        "None",
-        "model study, frontend",
-        "model study, frontend",
-        "model study, deployment",
+        "clean dataset",
+        "preprocess, model study",
+        "model training, frontend",
+        "model training, deployment",
     ]
 }
 df = pd.DataFrame(members)

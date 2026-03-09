@@ -7,7 +7,7 @@ import pandas as pd
 # intro
 st.title("Text Sentiment Prediction")
 "this project is a part of :rainbow-background[:rainbow[Artificial Intelligence course]]. The model used in this project is SVM"
-st.link_button("github", "https://github.com/MustMark/Thai-Sentiment-Analysis", icon=":material/open_in_new:")
+st.link_button("Source Code (Github)", "https://github.com/MustMark/Thai-Sentiment-Analysis", icon=":material/open_in_new:")
 ""
 
 # inputs
@@ -19,7 +19,11 @@ with st.container(horizontal=True, vertical_alignment='bottom', horizontal_align
 # model result
 model_container = st.container()
 
-if predict_btn: 
+if predict_btn and not text_input.strip():
+    st.error("Please enter text before predict!")
+
+if predict_btn and text_input.strip():
+    model_container = st.empty()
     with model_container:
         with st.spinner("generating result..."):
             output_text = test_model([text_input])[0]
@@ -38,6 +42,10 @@ with st.container(horizontal=True, vertical_alignment="center"):
 with st.container(horizontal_alignment="right"):
     json_file = st.file_uploader("Upload a json file", type='json', accept_multiple_files=False)
     json_predict_btn = st.button("predict", key="json", type="primary")
+
+    if json_predict_btn and not json_file:
+        st.error("Please upload json file before predict!")
+
     if json_predict_btn and json_file:
         with st.spinner("generating result"):
             result_json = handle_json_file(json_file)
