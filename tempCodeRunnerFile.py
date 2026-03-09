@@ -1,2 +1,0 @@
-
-print("Loading data...")
