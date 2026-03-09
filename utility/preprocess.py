@@ -51,7 +51,7 @@ def handle_negation(tokens):
             new_tokens.append(tokens[i])
     return new_tokens
 
-positive_words = ["ดี", "เยี่ยม", "สุดยอด", "คุ้ม", "อร่อย", "ชอบ", "ส่งเสริม"]
+positive_words = ["ดี", "เยี่ยม", "สุดยอด", "คุ้ม", "อร่อย", "ชอบ", "ส่งเสริม", "สุข"]
 negative_words = ["แย่", "ห่วย", "พัง", "แพง", "ช้า", "ไม่ดี"]
 
 def lexicon_features(text):

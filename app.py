@@ -6,12 +6,17 @@ pages = [
     st.Page(
         "pages/prediction.py",
         title="Prediction",
-        icon=":material/graph_1:"
+        icon=":material/home:"
     ),
     st.Page(
         "pages/members.py",
         title="Group members",
         icon=":material/group:"
+    ),
+    st.Page(
+        "pages/model.py",
+        title="model",
+        icon=":material/graph_1:"
     ),
 ]
 

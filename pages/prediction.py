@@ -52,4 +52,4 @@ with st.container(horizontal_alignment="right"):
             file_name="sentiment_result.json",
             mime="application/json"
         )
-        st.json(json_data)
+        # st.json(json_data)

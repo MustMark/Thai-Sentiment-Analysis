@@ -25,6 +25,12 @@ members = {
         "กุลชนะเจริญ",
         "โจว",
         "อิงคสันตติกุล",
+    ],
+    "Responsibility": [
+        "None",
+        "model study, frontend",
+        "model study, frontend",
+        "model study, deployment",
     ]
 }
 df = pd.DataFrame(members)
