@@ -2,67 +2,55 @@ import streamlit as st
 import pandas as pd
 import json
 import re
-import pickle
-import numpy as np
+import joblib
 from pythainlp.tokenize import word_tokenize
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-
-MAX_SEQUENCE_LENGTH = 150
-REVERSE_MAPPING = {0: 'negative', 1: 'neutral', 2: 'positive'}
 
 def thai_text_processor(text):
     if not isinstance(text, str): return ""
     text = re.sub(r'http\S+', '', text)
     text = re.sub(r'&#\d+;', '', text)
-    text = re.sub(r'ไม่\s*', 'ไม่_', text) 
+    text = re.sub(r'ไม่\s*', 'ไม่_', text)
     words = word_tokenize(text, engine='newmm')
     return " ".join(words)
 
 @st.cache_resource
 def load_resources():
     try:
-        model = load_model("sentiment_clstm_anti_overfit.keras")
-        with open("tokenizer.pkl", "rb") as f:
-            tokenizer = pickle.load(f)
-        return model, tokenizer
+        model = joblib.load("../ml/weight.pkl")
+        return model
     except Exception as e:
-        st.error(f"Model file not found. Please ensure 'sentiment_clstm_anti_overfit.keras' and 'tokenizer.pkl' exist: {e}")
-        return None, None
+        st.error(f"Model file not found: {e}")
+        return None
 
-model, tokenizer = load_resources()
+pipeline_model = load_resources()
 
-st.set_page_config(page_title="Deep Thai Sentiment", layout="centered")
-st.title("Deep Thai Sentiment Analyzer")
-st.markdown("**AI Assignment:** Powered by **Anti-Overfit C-LSTM (Deep Learning)**")
+st.set_page_config(page_title="Thai Sentiment Analysis", layout="centered")
+st.title("Thai Sentiment Analyzer 🇹🇭")
+st.markdown("**AI Assignment:** Powered by **Voting Ensemble (Sweet Spot Version)**")
 st.divider()
 
-if model and tokenizer:
+if pipeline_model:
     mode = st.radio("Select mode:", ("Single Text", "Batch Upload (JSON)"))
 
     def predict_sentiment(texts):
         clean_texts = [thai_text_processor(t) for t in texts]
-        seqs = tokenizer.texts_to_sequences(clean_texts)
-        padded_seqs = pad_sequences(seqs, maxlen=MAX_SEQUENCE_LENGTH, padding='post', truncating='post')
-        probs = model.predict(padded_seqs)
-        preds = np.argmax(probs, axis=1)
-        return [REVERSE_MAPPING[p] for p in preds]
+        predictions = pipeline_model.predict(clean_texts)
+        return predictions
 
     if mode == "Single Text":
-        user_input = st.text_area("Enter news or complaint text here:", height=150)
+        user_input = st.text_area("Enter text here:", height=150)
         
         if st.button("Analyze Sentiment"):
             if user_input.strip():
-                with st.spinner('Analyzing context with C-LSTM...'):
+                with st.spinner('Analyzing...'):
                     prediction = predict_sentiment([user_input])[0]
                 
                 if prediction == 'positive':
-                    st.success(f"**Prediction:** {prediction.upper()} (Positive / Compliment)")
-                    st.balloons()
+                    st.success(f"Prediction: {prediction.upper()}")
                 elif prediction == 'negative':
-                    st.error(f"**Prediction:** {prediction.upper()} (Negative / Complaint)")
+                    st.error(f"Prediction: {prediction.upper()}")
                 else:
-                    st.info(f"**Prediction:** {prediction.upper()} (Neutral / General News)")
+                    st.info(f"Prediction: {prediction.upper()}")
             else:
                 st.warning("Please enter text before analyzing.")
 
@@ -80,9 +68,9 @@ if model and tokenizer:
                     keys = list(text_dict.keys())
                     raw_texts = [text_dict[k] for k in keys]
                     
-                    st.write(f"Found **{len(raw_texts)}** texts. Sending to Deep Learning Pipeline...")
+                    st.write(f"Found {len(raw_texts)} texts. Processing...")
                     
-                    with st.spinner('Processing through C-LSTM network...'):
+                    with st.spinner('Analyzing...'):
                         predictions = predict_sentiment(raw_texts)
                     
                     data['sentiment'] = {}
@@ -101,7 +89,7 @@ if model and tokenizer:
                     json_string = json.dumps(data, ensure_ascii=False, indent=4)
                     st.download_button(
                         label="Download JSON file with predictions",
-                        file_name="sentiment_predictions_clstm.json",
+                        file_name="sentiment_predictions_final.json",
                         mime="application/json",
                         data=json_string
                     )
